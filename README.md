@@ -3,7 +3,9 @@
 
 Installation:
 git clone https://github.com/YanyanDai/Arduino-ROS-node-control-racecar.git InstallAIBot
+
 cd InstallAIBot
+
 ./installAIBot.sh
 
 Test:
