@@ -31,9 +31,7 @@ angular:
         z: 0.0" 
         
 PS: AIBot (racecar) linear velocity range: 
-    Forware: 0.5~1 m/s
-    Backward:-0.5~-1 m/s
-    Stop: 0
+    Forware: 0.5 ~ 1 m/s, Backward:-0.5 ~ -1 m/s, Stop: 0
     AIBot (racecar) angular velocity range: 
     -0.5~0.5 rad
 
