@@ -27,10 +27,7 @@ const int Forward = 1;
 const int Backward = 0;
 
 Servo steeringServo;
-//Servo electronicSpeedController ;  // The ESC on the TRAXXAS works like a Servo
 
-std_msgs::Int32 str_msg;
-ros::Publisher chatter("chatter", &str_msg); 
 
 // Arduino 'map' funtion for floating point
 double fmap (double toMap, double in_min, double in_max, double out_min, double out_max) {
@@ -73,13 +70,12 @@ void driveCallback ( const geometry_msgs::Twist&  twistMsg )
 ros::Subscriber<geometry_msgs::Twist> driveSubscriber("/aibot/cmd_vel", &driveCallback) ;
 
 void setup(){
-  pinMode(13, OUTPUT);
+
   pinMode(DIRPin, OUTPUT);
   pinMode(PWMPin, OUTPUT);
   Serial.begin(115200) ;
+  // Intial Node
   nodeHandle.initNode();
-  // This can be useful for debugging purposes
-  nodeHandle.advertise(chatter);
   // Subscribe to the steering and throttle messages
   nodeHandle.subscribe(driveSubscriber) ;
   // Attach the servos to actual pins
@@ -94,5 +90,4 @@ void setup(){
 
 void loop(){
   nodeHandle.spinOnce();
-  delay(1);
 }
