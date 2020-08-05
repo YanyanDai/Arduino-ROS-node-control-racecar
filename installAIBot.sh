@@ -9,7 +9,7 @@ cd ..
 catkin_make
 
 # Copy Arduino code 
-cd ~/installAIBot
+cd ~/InstallAIBot
 cp -r Arduino\ Firmware/* '/home/nvidia/sketchbook'
 sudo apt-get install ros-melodic-rosserial-arduino ros-melodic-rosserial ros-melodic-angles -y
 cd ~/sketchbook/libraries
