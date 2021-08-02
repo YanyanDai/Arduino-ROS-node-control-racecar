@@ -21,10 +21,10 @@ const int minThrottle = 0 ;
 //const int minThrottle = 110 ;
 const int maxThrottle = 150 ;
 
-const int DIRPin = 4;
+const int DIRPin[2] = {2, 4};
 const int PWMPin = 5;
-const int Forward = 1;
-const int Backward = 0;
+//const int Forward = 1;
+//const int Backward = 0;
 
 Servo steeringServo;
 
@@ -59,9 +59,11 @@ void driveCallback ( const geometry_msgs::Twist&  twistMsg )
     escCommand = maxThrottle ;
   }
   if (twistMsg.linear.x >= 0.5){
-  digitalWrite(DIRPin,Forward);
+  digitalWrite(DIRPin[0],LOW);
+  digitalWrite(DIRPin[1],HIGH);
   }else{
-  digitalWrite(DIRPin,Backward);
+  digitalWrite(DIRPin[0],HIGH);
+  digitalWrite(DIRPin[1],LOW);
   }
   analogWrite(PWMPin,escCommand);
 
@@ -70,8 +72,8 @@ void driveCallback ( const geometry_msgs::Twist&  twistMsg )
 ros::Subscriber<geometry_msgs::Twist> driveSubscriber("/aibot/cmd_vel", &driveCallback) ;
 
 void setup(){
-
-  pinMode(DIRPin, OUTPUT);
+  for (int i=0; i<2; i++){
+  pinMode(DIRPin[i], OUTPUT);}
   pinMode(PWMPin, OUTPUT);
   Serial.begin(115200) ;
   // Intial Node
@@ -82,7 +84,8 @@ void setup(){
   steeringServo.attach(9); // Steering servo is attached to pin 9
   // Steering centered is 45
   steeringServo.write(45) ;
-  digitalWrite(DIRPin,Forward);
+  digitalWrite(DIRPin[0],LOW);
+  digitalWrite(DIRPin[1],HIGH);
   analogWrite(PWMPin,0);
   delay(1000) ;
   
