@@ -15,16 +15,17 @@
 
 ros::NodeHandle  nodeHandle;
 
-const int minSteering = 0 ;
-const int maxSteering = 90 ;
-const int minThrottle = 0 ;
-//const int minThrottle = 110 ;
-const int maxThrottle = 150 ;
+const int minSteering = 45 ;
+const int maxSteering = 135 ;
+const int minThrottle = 50 ;
+const int maxThrottle = 255 ;
 
-const int DIRPin[2] = {2, 4};
-const int PWMPin = 5;
-//const int Forward = 1;
-//const int Backward = 0;
+//const int DIRPin[2] = {2, 4}; //L298N
+//const int PWMPin = 5; //L298N
+const int DIRPin = 4; //yfrobot motor driver PM-R3
+const int PWMPin = 5;  //yfrobot motor driver 
+const int Forward = 0; //yfrobot motor driver 
+const int Backward = 1; //yfrobot motor driver
 
 Servo steeringServo;
 
@@ -49,7 +50,7 @@ void driveCallback ( const geometry_msgs::Twist&  twistMsg )
   
   // ESC forward is between 0.5 and 1.0
   int escCommand ;
-  escCommand = (int)fmap(abs(twistMsg.linear.x), 0.5, 1.0, 110.0, maxThrottle) ;
+  escCommand = (int)fmap(abs(twistMsg.linear.x), 0.5, 1.0, minThrottle, maxThrottle) ;
 
   // Check to make sure throttle command is within bounds
   if (escCommand < minThrottle) { 
@@ -59,11 +60,13 @@ void driveCallback ( const geometry_msgs::Twist&  twistMsg )
     escCommand = maxThrottle ;
   }
   if (twistMsg.linear.x >= 0.5){
-  digitalWrite(DIRPin[0],LOW);
-  digitalWrite(DIRPin[1],HIGH);
+  //digitalWrite(DIRPin[0],LOW);
+  //digitalWrite(DIRPin[1],HIGH);
+    digitalWrite(DIRPin,Forward);
   }else{
-  digitalWrite(DIRPin[0],HIGH);
-  digitalWrite(DIRPin[1],LOW);
+  //digitalWrite(DIRPin[0],HIGH);
+  //digitalWrite(DIRPin[1],LOW);
+    digitalWrite(DIRPin,Backward);
   }
   analogWrite(PWMPin,escCommand);
 
@@ -72,8 +75,9 @@ void driveCallback ( const geometry_msgs::Twist&  twistMsg )
 ros::Subscriber<geometry_msgs::Twist> driveSubscriber("/aibot/cmd_vel", &driveCallback) ;
 
 void setup(){
-  for (int i=0; i<2; i++){
-  pinMode(DIRPin[i], OUTPUT);}
+  //for (int i=0; i<2; i++){
+  //pinMode(DIRPin[i], OUTPUT);}
+  pinMode(DIRPin, OUTPUT);
   pinMode(PWMPin, OUTPUT);
   Serial.begin(115200) ;
   // Intial Node
@@ -81,11 +85,13 @@ void setup(){
   // Subscribe to the steering and throttle messages
   nodeHandle.subscribe(driveSubscriber) ;
   // Attach the servos to actual pins
-  steeringServo.attach(9); // Steering servo is attached to pin 9
-  // Steering centered is 45
-  steeringServo.write(45) ;
-  digitalWrite(DIRPin[0],LOW);
-  digitalWrite(DIRPin[1],HIGH);
+  //steeringServo.attach(9); // Steering servo is attached to pin 9
+  steeringServo.attach(8); // Steering servo is attached to pin 8
+  // Steering centered is 90
+  steeringServo.write(90) ;
+  //digitalWrite(DIRPin[0],LOW);
+  //digitalWrite(DIRPin[1],HIGH);
+  digitalWrite(DIRPin,Forward);
   analogWrite(PWMPin,0);
   delay(1000) ;
   
