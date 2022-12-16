@@ -2,6 +2,16 @@
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/Int32.h>
 
+// Front Motor Drive
+#define MOTOR1_PWM 2
+#define MOTOR1_ENA 3
+#define MOTOR1_ENB 4
+
+// Rear Motor Drive
+#define MOTOR2_PWM 5
+#define MOTOR2_ENA 6
+#define MOTOR2_ENB 7
+
 ros::NodeHandle nh;
 geometry_msgs::Twist cmd_vel; //모터 명령 수신을 위한 변수(수신)
 std_msgs::Int32 encoder_data1; //모터 엔코터1 값 전달을 위한 변수 (송신)
