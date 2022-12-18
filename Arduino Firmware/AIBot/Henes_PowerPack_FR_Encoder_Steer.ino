@@ -298,7 +298,7 @@ void loop() {
   encoder_pub2.publish(&encoder_data2);
 
   // read the analog in value:
-  sensorValue = analogRead(Steer_Sensor);
+  sensorValue = analogRead(Steering_Sensor);
   // map it to the range of the analog out:
   Steer_Angle_Measure = map(sensorValue, 50, 1050, LEFT_STEER_ANGLE, RIGHT_STEER_ANGLE);
   Steering_Angle = NEURAL_ANGLE + steer_angle;
