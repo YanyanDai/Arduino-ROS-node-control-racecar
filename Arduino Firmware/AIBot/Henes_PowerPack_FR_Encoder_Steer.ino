@@ -19,7 +19,7 @@ signed long encoder2count = 0;
 #define MOTOR2_ENB 7
 
 ///////////////////////////////////////  Steering PID 제어 /////////////////////////////////////////////
-#define Steering_Sensor A15  // Analog input pin that the potentiometer is attached to
+#define Steering_Sensor 15  // Analog input pin that the potentiometer is attached to A15
 #define NEURAL_ANGLE 3
 #define LEFT_STEER_ANGLE  -30
 #define RIGHT_STEER_ANGLE  30
