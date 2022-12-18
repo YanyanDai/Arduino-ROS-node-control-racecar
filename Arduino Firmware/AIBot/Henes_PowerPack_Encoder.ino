@@ -216,8 +216,8 @@ void loop() {
   encoder_pub1.publish(&encoder_data1);
   encoder_pub2.publish(&encoder_data2);
   
-  serial.print("Encoder:");
-  serial.println(encoder2count);
+  Serial.print("Encoder:");
+  Serial.println(encoder2count);
   
   nh.spinOnce();
 }
